@@ -1,162 +1,328 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nexora Verify</title>
 
-<title>Secure Access</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<style>
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
 
-body{
-  margin:0;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-family:Arial;
-  background:#0b0f19;
-  overflow:hidden;
-  color:white;
-}
+    body{
+      height:100vh;
+      overflow:hidden;
+      font-family:'Poppins',sans-serif;
+      background:#030512;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position:relative;
+    }
 
-/* gradient animé */
-.bg{
-  position:absolute;
-  width:600px;
-  height:600px;
-  background:linear-gradient(45deg,#5865F2,#00d4ff,#7c3aed);
-  filter:blur(180px);
-  border-radius:50%;
-  animation:move 10s infinite alternate;
-}
+    /* Background animé */
+    body::before{
+      content:"";
+      position:absolute;
+      width:1200px;
+      height:1200px;
+      background:
+      radial-gradient(circle, rgba(0,174,255,0.18) 0%, transparent 60%);
+      animation:pulse 6s infinite ease-in-out;
+    }
 
-@keyframes move{
-  from{transform:translate(-250px,-200px);}
-  to{transform:translate(250px,200px);}
-}
+    body::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+      radial-gradient(circle at 20% 70%, rgba(170,0,255,0.25), transparent 25%),
+      radial-gradient(circle at 80% 30%, rgba(0,140,255,0.25), transparent 25%);
+      filter:blur(40px);
+    }
 
-/* card */
-.card{
-  position:relative;
-  z-index:2;
-  width:420px;
-  padding:35px;
-  border-radius:18px;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.08);
-  backdrop-filter:blur(18px);
-  text-align:center;
-  box-shadow:0 0 40px rgba(0,0,0,0.5);
-  animation:fade 1s ease;
-}
+    @keyframes pulse{
+      0%{
+        transform:scale(1);
+      }
+      50%{
+        transform:scale(1.1);
+      }
+      100%{
+        transform:scale(1);
+      }
+    }
 
-@keyframes fade{
-  from{opacity:0; transform:translateY(30px);}
-  to{opacity:1; transform:translateY(0);}
-}
+    /* Particules */
+    .particles span{
+      position:absolute;
+      display:block;
+      width:4px;
+      height:4px;
+      background:#7c3cff;
+      border-radius:50%;
+      box-shadow:0 0 10px #7c3cff;
+      animation:float 10s linear infinite;
+      opacity:.8;
+    }
 
-h1{
-  font-size:26px;
-  margin-bottom:8px;
-}
+    .particles span:nth-child(1){
+      left:10%;
+      animation-duration:8s;
+      top:100%;
+    }
 
-p{
-  color:#b5b5b5;
-  margin-bottom:25px;
-}
+    .particles span:nth-child(2){
+      left:25%;
+      animation-duration:12s;
+      top:100%;
+    }
 
-/* bouton premium */
-button{
-  background:linear-gradient(90deg,#5865F2,#7c3aed);
-  border:none;
-  padding:14px 40px;
-  color:white;
-  font-size:16px;
-  border-radius:12px;
-  cursor:pointer;
-  transition:0.3s;
-  box-shadow:0 0 25px rgba(88,101,242,0.6);
-}
+    .particles span:nth-child(3){
+      left:40%;
+      animation-duration:9s;
+      top:100%;
+    }
 
-button:hover{
-  transform:scale(1.08);
-  box-shadow:0 0 45px rgba(124,58,237,0.8);
-}
+    .particles span:nth-child(4){
+      left:60%;
+      animation-duration:14s;
+      top:100%;
+    }
 
-/* status */
-#msg{
-  margin-top:20px;
-  font-size:14px;
-  color:#57F287;
-}
+    .particles span:nth-child(5){
+      left:80%;
+      animation-duration:10s;
+      top:100%;
+    }
 
-/* loader */
-.loader{
-  margin-top:20px;
-  display:none;
-}
+    @keyframes float{
+      0%{
+        transform:translateY(0) scale(1);
+        opacity:0;
+      }
+      20%{
+        opacity:1;
+      }
+      100%{
+        transform:translateY(-110vh) scale(1.5);
+        opacity:0;
+      }
+    }
 
-.dot{
-  width:8px;
-  height:8px;
-  background:#5865F2;
-  border-radius:50%;
-  display:inline-block;
-  margin:0 3px;
-  animation:bounce 1s infinite;
-}
+    /* Carte */
+    .verify-box{
+      position:relative;
+      width:470px;
+      padding:45px;
+      border-radius:28px;
+      background:rgba(8,12,30,0.6);
+      backdrop-filter:blur(20px);
+      border:1px solid rgba(255,255,255,0.08);
+      box-shadow:
+      0 0 40px rgba(0,174,255,0.15),
+      0 0 80px rgba(140,0,255,0.15);
+      text-align:center;
+      z-index:2;
+      overflow:hidden;
+    }
 
-.dot:nth-child(2){animation-delay:0.2s;}
-.dot:nth-child(3){animation-delay:0.4s;}
+    .verify-box::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      border-radius:28px;
+      padding:2px;
+      background:linear-gradient(135deg,#00c3ff,#7b2cff,#00c3ff);
+      -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+      -webkit-mask-composite:xor;
+      mask-composite:exclude;
+      animation:borderRotate 5s linear infinite;
+    }
 
-@keyframes bounce{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-10px);}
-}
+    @keyframes borderRotate{
+      100%{
+        filter:hue-rotate(360deg);
+      }
+    }
 
-</style>
+    .logo{
+      width:180px;
+      margin-bottom:25px;
+      animation:logoFloat 4s ease-in-out infinite;
+      filter:drop-shadow(0 0 20px rgba(123,44,255,.5));
+    }
 
+    @keyframes logoFloat{
+      0%{
+        transform:translateY(0px);
+      }
+      50%{
+        transform:translateY(-8px);
+      }
+      100%{
+        transform:translateY(0px);
+      }
+    }
+
+    h1{
+      color:white;
+      font-size:42px;
+      margin-bottom:10px;
+      font-weight:700;
+      letter-spacing:1px;
+    }
+
+    .subtitle{
+      font-size:18px;
+      margin-bottom:35px;
+      background:linear-gradient(90deg,#00c3ff,#c14dff);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      font-weight:500;
+    }
+
+    .verify-btn{
+      position:relative;
+      border:none;
+      width:100%;
+      padding:18px;
+      border-radius:18px;
+      font-size:18px;
+      font-weight:600;
+      color:white;
+      cursor:pointer;
+      background:linear-gradient(90deg,#6f2cff,#00bfff);
+      transition:0.3s;
+      overflow:hidden;
+      box-shadow:
+      0 0 20px rgba(111,44,255,0.5),
+      0 0 40px rgba(0,191,255,0.35);
+    }
+
+    .verify-btn:hover{
+      transform:translateY(-3px) scale(1.02);
+      box-shadow:
+      0 0 30px rgba(111,44,255,0.7),
+      0 0 60px rgba(0,191,255,0.5);
+    }
+
+    .verify-btn::before{
+      content:"";
+      position:absolute;
+      top:0;
+      left:-100%;
+      width:100%;
+      height:100%;
+      background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.3),
+        transparent
+      );
+      transition:0.5s;
+    }
+
+    .verify-btn:hover::before{
+      left:100%;
+    }
+
+    .success{
+      margin-top:22px;
+      color:#00ff9d;
+      font-size:15px;
+      font-weight:500;
+      text-shadow:0 0 12px rgba(0,255,157,0.5);
+    }
+
+    .circle{
+      position:absolute;
+      width:700px;
+      height:700px;
+      border:1px solid rgba(0,191,255,0.12);
+      border-radius:50%;
+      animation:rotate 25s linear infinite;
+      z-index:0;
+    }
+
+    .circle::before{
+      content:"";
+      position:absolute;
+      inset:40px;
+      border-radius:50%;
+      border:1px solid rgba(162,0,255,0.18);
+    }
+
+    @keyframes rotate{
+      from{
+        transform:rotate(0deg);
+      }
+      to{
+        transform:rotate(360deg);
+      }
+    }
+
+    @media(max-width:600px){
+
+      .verify-box{
+        width:92%;
+        padding:35px 25px;
+      }
+
+      h1{
+        font-size:32px;
+      }
+
+      .subtitle{
+        font-size:16px;
+      }
+
+      .logo{
+        width:150px;
+      }
+    }
+
+  </style>
 </head>
-
 <body>
 
-<div class="bg"></div>
+  <div class="circle"></div>
 
-<div class="card">
+  <div class="particles">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 
-<h1>Secure Verification</h1>
+  <div class="verify-box">
 
-<p>Accès protégé — vérification requise</p>
+    <!-- MET TON LOGO ICI -->
+    <img src="nexora.png" class="logo" alt="Nexora Logo">
 
-<button id="btn">Verify Identity</button>
+    <h1>Secure Verification</h1>
 
-<div class="loader" id="loader">
-  <div class="dot"></div>
-  <div class="dot"></div>
-  <div class="dot"></div>
-</div>
+    <div class="subtitle">
+      Nexora verify
+    </div>
 
-<div id="msg"></div>
+    <button class="verify-btn">
+      Verify Identity
+    </button>
 
-</div>
+    <div class="success">
+      ✔ Verification réussie
+    </div>
 
-<script>
-
-document.getElementById("btn").onclick = async () => {
-
-  document.getElementById("loader").style.display = "block";
-
-  const res = await fetch("/finalverify");
-  const text = await res.text();
-
-  document.getElementById("msg").innerText = text;
-
-  document.getElementById("loader").style.display = "none";
-};
-
-</script>
+  </div>
 
 </body>
 </html>
