@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Nexora Verify</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
+
     *{
       margin:0;
       padding:0;
@@ -18,21 +20,21 @@
       height:100vh;
       overflow:hidden;
       font-family:'Poppins',sans-serif;
-      background:#030512;
+      background:#02040f;
       display:flex;
       justify-content:center;
       align-items:center;
       position:relative;
     }
 
-    /* Background animé */
+    /* Glow background */
     body::before{
       content:"";
       position:absolute;
       width:1200px;
       height:1200px;
       background:
-      radial-gradient(circle, rgba(0,174,255,0.18) 0%, transparent 60%);
+      radial-gradient(circle, rgba(0,174,255,0.15) 0%, transparent 60%);
       animation:pulse 6s infinite ease-in-out;
     }
 
@@ -43,95 +45,122 @@
       background:
       radial-gradient(circle at 20% 70%, rgba(170,0,255,0.25), transparent 25%),
       radial-gradient(circle at 80% 30%, rgba(0,140,255,0.25), transparent 25%);
-      filter:blur(40px);
+      filter:blur(60px);
     }
 
     @keyframes pulse{
       0%{
         transform:scale(1);
       }
+
       50%{
         transform:scale(1.1);
       }
+
       100%{
         transform:scale(1);
+      }
+    }
+
+    /* Cercles animés */
+    .circle{
+      position:absolute;
+      border-radius:50%;
+      border:1px solid rgba(255,255,255,0.08);
+      animation:rotate 20s linear infinite;
+    }
+
+    .circle1{
+      width:700px;
+      height:700px;
+    }
+
+    .circle2{
+      width:500px;
+      height:500px;
+      animation-direction:reverse;
+    }
+
+    @keyframes rotate{
+      from{
+        transform:rotate(0deg);
+      }
+
+      to{
+        transform:rotate(360deg);
       }
     }
 
     /* Particules */
     .particles span{
       position:absolute;
-      display:block;
       width:4px;
       height:4px;
-      background:#7c3cff;
       border-radius:50%;
-      box-shadow:0 0 10px #7c3cff;
+      background:#8b5cf6;
+      box-shadow:0 0 10px #8b5cf6;
       animation:float 10s linear infinite;
-      opacity:.8;
     }
 
     .particles span:nth-child(1){
       left:10%;
-      animation-duration:8s;
-      top:100%;
+      animation-duration:7s;
     }
 
     .particles span:nth-child(2){
-      left:25%;
+      left:30%;
       animation-duration:12s;
-      top:100%;
     }
 
     .particles span:nth-child(3){
-      left:40%;
-      animation-duration:9s;
-      top:100%;
+      left:50%;
+      animation-duration:8s;
     }
 
     .particles span:nth-child(4){
-      left:60%;
-      animation-duration:14s;
-      top:100%;
+      left:70%;
+      animation-duration:15s;
     }
 
     .particles span:nth-child(5){
-      left:80%;
-      animation-duration:10s;
-      top:100%;
+      left:90%;
+      animation-duration:9s;
     }
 
     @keyframes float{
-      0%{
-        transform:translateY(0) scale(1);
+      from{
+        transform:translateY(100vh);
         opacity:0;
       }
+
       20%{
         opacity:1;
       }
-      100%{
-        transform:translateY(-110vh) scale(1.5);
+
+      to{
+        transform:translateY(-100vh);
         opacity:0;
       }
     }
 
     /* Carte */
     .verify-box{
-      position:relative;
-      width:470px;
+      width:450px;
       padding:45px;
       border-radius:28px;
-      background:rgba(8,12,30,0.6);
+      background:rgba(7,10,25,0.65);
       backdrop-filter:blur(20px);
       border:1px solid rgba(255,255,255,0.08);
-      box-shadow:
-      0 0 40px rgba(0,174,255,0.15),
-      0 0 80px rgba(140,0,255,0.15);
       text-align:center;
+      position:relative;
       z-index:2;
-      overflow:hidden;
+
+      box-shadow:
+      0 0 40px rgba(0,174,255,0.2),
+      0 0 80px rgba(140,0,255,0.2);
     }
 
+    /* Bordure animée */
     .verify-box::before{
       content:"";
       position:absolute;
@@ -139,36 +168,20 @@
       border-radius:28px;
       padding:2px;
       background:linear-gradient(135deg,#00c3ff,#7b2cff,#00c3ff);
+
       -webkit-mask:
       linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
+
       -webkit-mask-composite:xor;
       mask-composite:exclude;
-      animation:borderRotate 5s linear infinite;
+
+      animation:borderGlow 5s linear infinite;
     }
 
-    @keyframes borderRotate{
+    @keyframes borderGlow{
       100%{
         filter:hue-rotate(360deg);
-      }
-    }
-
-    .logo{
-      width:180px;
-      margin-bottom:25px;
-      animation:logoFloat 4s ease-in-out infinite;
-      filter:drop-shadow(0 0 20px rgba(123,44,255,.5));
-    }
-
-    @keyframes logoFloat{
-      0%{
-        transform:translateY(0px);
-      }
-      50%{
-        transform:translateY(-8px);
-      }
-      100%{
-        transform:translateY(0px);
       }
     }
 
@@ -181,94 +194,61 @@
     }
 
     .subtitle{
-      font-size:18px;
+      font-size:20px;
       margin-bottom:35px;
+
       background:linear-gradient(90deg,#00c3ff,#c14dff);
+
       -webkit-background-clip:text;
       -webkit-text-fill-color:transparent;
+
       font-weight:500;
     }
 
+    /* Bouton */
     .verify-btn{
-      position:relative;
-      border:none;
       width:100%;
       padding:18px;
+      border:none;
       border-radius:18px;
+
       font-size:18px;
       font-weight:600;
-      color:white;
+
       cursor:pointer;
-      background:linear-gradient(90deg,#6f2cff,#00bfff);
+
+      color:white;
+
+      background:linear-gradient(90deg,#7b2cff,#00c3ff);
+
       transition:0.3s;
-      overflow:hidden;
+
       box-shadow:
-      0 0 20px rgba(111,44,255,0.5),
-      0 0 40px rgba(0,191,255,0.35);
+      0 0 20px rgba(123,44,255,0.5),
+      0 0 40px rgba(0,195,255,0.3);
     }
 
     .verify-btn:hover{
-      transform:translateY(-3px) scale(1.02);
+      transform:translateY(-3px) scale(1.03);
+
       box-shadow:
-      0 0 30px rgba(111,44,255,0.7),
-      0 0 60px rgba(0,191,255,0.5);
-    }
-
-    .verify-btn::before{
-      content:"";
-      position:absolute;
-      top:0;
-      left:-100%;
-      width:100%;
-      height:100%;
-      background:linear-gradient(
-        120deg,
-        transparent,
-        rgba(255,255,255,0.3),
-        transparent
-      );
-      transition:0.5s;
-    }
-
-    .verify-btn:hover::before{
-      left:100%;
+      0 0 30px rgba(123,44,255,0.7),
+      0 0 60px rgba(0,195,255,0.5);
     }
 
     .success{
-      margin-top:22px;
-      color:#00ff9d;
+      margin-top:20px;
+      color:#00ff99;
+      opacity:0;
+      transition:0.4s;
       font-size:15px;
-      font-weight:500;
-      text-shadow:0 0 12px rgba(0,255,157,0.5);
     }
 
-    .circle{
-      position:absolute;
-      width:700px;
-      height:700px;
-      border:1px solid rgba(0,191,255,0.12);
-      border-radius:50%;
-      animation:rotate 25s linear infinite;
-      z-index:0;
+    .success.show{
+      opacity:1;
     }
 
-    .circle::before{
-      content:"";
-      position:absolute;
-      inset:40px;
-      border-radius:50%;
-      border:1px solid rgba(162,0,255,0.18);
-    }
-
-    @keyframes rotate{
-      from{
-        transform:rotate(0deg);
-      }
-      to{
-        transform:rotate(360deg);
-      }
-    }
-
+    /* Responsive */
     @media(max-width:600px){
 
       .verify-box{
@@ -279,22 +259,18 @@
       h1{
         font-size:32px;
       }
-
-      .subtitle{
-        font-size:16px;
-      }
-
-      .logo{
-        width:150px;
-      }
     }
 
   </style>
 </head>
+
 <body>
 
-  <div class="circle"></div>
+  <!-- Cercles -->
+  <div class="circle circle1"></div>
+  <div class="circle circle2"></div>
 
+  <!-- Particules -->
   <div class="particles">
     <span></span>
     <span></span>
@@ -303,26 +279,45 @@
     <span></span>
   </div>
 
+  <!-- Carte -->
   <div class="verify-box">
 
-    <!-- MET TON LOGO ICI -->
-    <img src="nexora.png" class="logo" alt="Nexora Logo">
+    <h1>NEXORA</h1>
 
-    <h1>Secure Verification</h1>
-
-    <div class="subtitle">
+    <p class="subtitle">
       Nexora verify
-    </div>
+    </p>
 
-    <button class="verify-btn">
+    <button class="verify-btn" id="verifyBtn">
       Verify Identity
     </button>
 
-    <div class="success">
+    <div class="success" id="successMessage">
       ✔ Verification réussie
     </div>
 
   </div>
+
+  <script>
+
+    const verifyBtn = document.getElementById("verifyBtn");
+    const successMessage = document.getElementById("successMessage");
+
+    verifyBtn.addEventListener("click", () => {
+
+      verifyBtn.innerHTML = "Verification...";
+
+      setTimeout(() => {
+
+        verifyBtn.innerHTML = "Verified ✔";
+
+        successMessage.classList.add("show");
+
+      }, 2000);
+
+    });
+
+  </script>
 
 </body>
 </html>
