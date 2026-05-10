@@ -85,6 +85,12 @@ h1{
   cursor:pointer;
   color:white;
   background:linear-gradient(90deg,#7b2cff,#00c3ff);
+  margin-top:10px;
+}
+
+.verify-btn:disabled{
+  opacity:0.5;
+  cursor:not-allowed;
 }
 
 .ready{
@@ -96,6 +102,12 @@ h1{
 .user{
   color:#fff;
   margin-bottom:15px;
+}
+
+.error{
+  color:red;
+  margin-top:10px;
+  display:none;
 }
 
 </style>
@@ -113,6 +125,8 @@ h1{
 
   <div id="ready" class="ready">✔ Connected to Discord</div>
 
+  <div id="error" class="error">❌ User introuvable</div>
+
   <button id="loginBtn" class="verify-btn" onclick="login()">
     Verify Identity
   </button>
@@ -128,11 +142,20 @@ h1{
 const params = new URLSearchParams(window.location.search);
 const userId = params.get("user");
 
-if(userId){
-  document.getElementById("ready").style.display = "block";
-  document.getElementById("loginBtn").style.display = "none";
-  document.getElementById("finalBtn").style.display = "block";
-  document.getElementById("user").innerText = "User ID: " + userId;
+const loginBtn = document.getElementById("loginBtn");
+const finalBtn = document.getElementById("finalBtn");
+const ready = document.getElementById("ready");
+const userBox = document.getElementById("user");
+const errorBox = document.getElementById("error");
+
+if(userId && userId !== "null"){
+  ready.style.display = "block";
+  loginBtn.style.display = "none";
+  finalBtn.style.display = "block";
+  userBox.innerText = "User ID: " + userId;
+} else {
+  errorBox.style.display = "block";
+  finalBtn.disabled = true;
 }
 
 function login(){
@@ -141,14 +164,29 @@ function login(){
 
 async function verifyRole(){
 
-  const res = await fetch("/api/verify", {
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body: JSON.stringify({ userId })
-  });
+  try {
 
-  const text = await res.text();
-  alert(text);
+    finalBtn.disabled = true;
+    finalBtn.innerText = "Verification...";
+
+    const res = await fetch("/api/verify", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ userId })
+    });
+
+    const text = await res.text();
+
+    alert(text);
+
+    finalBtn.innerText = "Verified ✔";
+
+  } catch (err) {
+
+    alert("Erreur verification");
+    console.log(err);
+
+  }
 
 }
 
