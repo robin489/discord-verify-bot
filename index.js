@@ -97,7 +97,7 @@ app.get("/callback", async (req, res) => {
 
 });
 
-/* VERIFY MANUELLE + LOG SALON */
+/* VERIFY MANUELLE + LOG SALON (FIXED) */
 app.post("/api/verify", async (req, res) => {
 
   try {
@@ -109,22 +109,25 @@ app.post("/api/verify", async (req, res) => {
     const guild = await client.guilds.fetch(process.env.GUILD_ID);
     const member = await guild.members.fetch(userId);
 
-    // 👉 role add
+    // 👉 add role
     await member.roles.add(process.env.ROLE_ID);
 
     console.log(`✔ Role donné à ${userId}`);
 
-    // 👉 LOG DANS SALON VERIFY
-    const channel = await guild.channels.fetch(process.env.VERIFY_CHANNEL_ID);
+    // 👉 LOG SALON VERIFY (FIX IMPORTANT)
+    const channel = guild.channels.cache.get(process.env.VERIFY_CHANNEL_ID);
 
-    if (channel) {
-      channel.send(`✔ <@${userId}> a été vérifié avec succès`);
+    if (!channel) {
+      console.log("❌ Salon VERIFY introuvable");
+    } else {
+      await channel.send(`✔ <@${userId}> a été vérifié avec succès`);
+      console.log("✔ Message envoyé salon verify");
     }
 
     res.send("Utilisateur vérifié ✔");
 
   } catch (err) {
-    console.error("❌ VERIFY ERROR:", err.message);
+    console.error("❌ VERIFY ERROR:", err);
     res.status(500).send("Erreur verification");
   }
 
