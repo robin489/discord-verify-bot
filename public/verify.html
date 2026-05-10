@@ -27,7 +27,7 @@
       position:relative;
     }
 
-    /* Glow background */
+    /* Background glow */
     body::before{
       content:"";
       position:absolute;
@@ -236,6 +236,11 @@
       0 0 60px rgba(0,195,255,0.5);
     }
 
+    .verify-btn:disabled{
+      opacity:0.8;
+      cursor:not-allowed;
+    }
+
     .success{
       margin-top:20px;
       color:#00ff99;
@@ -300,20 +305,37 @@
 
   <script>
 
-    const verifyBtn = document.getElementById("verifyBtn");
-    const successMessage = document.getElementById("successMessage");
+    document.addEventListener("DOMContentLoaded", () => {
 
-    verifyBtn.addEventListener("click", () => {
+      const verifyBtn = document.getElementById("verifyBtn");
+      const successMessage = document.getElementById("successMessage");
 
-      verifyBtn.innerHTML = "Verification...";
+      verifyBtn.addEventListener("click", () => {
 
-      setTimeout(() => {
+        /* Désactive le bouton */
+        verifyBtn.disabled = true;
 
-        verifyBtn.innerHTML = "Verified ✔";
+        /* Animation texte */
+        verifyBtn.innerHTML = "Verification...";
 
-        successMessage.classList.add("show");
+        /* Effet loading */
+        verifyBtn.style.opacity = "0.8";
 
-      }, 2000);
+        setTimeout(() => {
+
+          /* Succès */
+          verifyBtn.innerHTML = "Verified ✔";
+
+          /* Couleur verte */
+          verifyBtn.style.background =
+          "linear-gradient(90deg,#00ff99,#00c3ff)";
+
+          /* Message visible */
+          successMessage.classList.add("show");
+
+        }, 2000);
+
+      });
 
     });
 
