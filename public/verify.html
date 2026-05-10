@@ -1,208 +1,158 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Nexora Verify</title>
+<title>Nexora Verify</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <style>
+<style>
 
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-    body{
-      height:100vh;
-      overflow:hidden;
-      font-family:'Poppins',sans-serif;
-      background:#02040f;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      position:relative;
-    }
+body{
+  height:100vh;
+  overflow:hidden;
+  font-family:'Poppins',sans-serif;
+  background:#02040f;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+}
 
-    body::before{
-      content:"";
-      position:absolute;
-      width:1200px;
-      height:1200px;
-      background: radial-gradient(circle, rgba(0,174,255,0.15) 0%, transparent 60%);
-      animation:pulse 6s infinite ease-in-out;
-    }
+body::before{
+  content:"";
+  position:absolute;
+  width:1200px;
+  height:1200px;
+  background: radial-gradient(circle, rgba(0,174,255,0.15) 0%, transparent 60%);
+  animation:pulse 6s infinite ease-in-out;
+}
 
-    body::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-      radial-gradient(circle at 20% 70%, rgba(170,0,255,0.25), transparent 25%),
-      radial-gradient(circle at 80% 30%, rgba(0,140,255,0.25), transparent 25%);
-      filter:blur(60px);
-    }
+body::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+  radial-gradient(circle at 20% 70%, rgba(170,0,255,0.25), transparent 25%),
+  radial-gradient(circle at 80% 30%, rgba(0,140,255,0.25), transparent 25%);
+  filter:blur(60px);
+}
 
-    @keyframes pulse{
-      0%{transform:scale(1);}
-      50%{transform:scale(1.1);}
-      100%{transform:scale(1);}
-    }
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+  100%{transform:scale(1);}
+}
 
-    .circle{
-      position:absolute;
-      border-radius:50%;
-      border:1px solid rgba(255,255,255,0.08);
-      animation:rotate 20s linear infinite;
-    }
+.verify-box{
+  width:450px;
+  padding:45px;
+  border-radius:28px;
+  background:rgba(7,10,25,0.65);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.08);
+  text-align:center;
+  z-index:2;
+  position:relative;
+  box-shadow:0 0 40px rgba(0,174,255,0.2);
+}
 
-    .circle1{width:700px;height:700px;}
-    .circle2{width:500px;height:500px;animation-direction:reverse;}
+h1{
+  color:white;
+  font-size:42px;
+}
 
-    @keyframes rotate{
-      from{transform:rotate(0deg);}
-      to{transform:rotate(360deg);}
-    }
+.subtitle{
+  color:#aaa;
+  margin-bottom:20px;
+}
 
-    .particles span{
-      position:absolute;
-      width:4px;
-      height:4px;
-      border-radius:50%;
-      background:#8b5cf6;
-      box-shadow:0 0 10px #8b5cf6;
-      animation:float 10s linear infinite;
-    }
+.verify-btn{
+  width:100%;
+  padding:18px;
+  border:none;
+  border-radius:18px;
+  font-size:18px;
+  font-weight:600;
+  cursor:pointer;
+  color:white;
+  background:linear-gradient(90deg,#7b2cff,#00c3ff);
+}
 
-    .particles span:nth-child(1){left:10%;animation-duration:7s;}
-    .particles span:nth-child(2){left:30%;animation-duration:12s;}
-    .particles span:nth-child(3){left:50%;animation-duration:8s;}
-    .particles span:nth-child(4){left:70%;animation-duration:15s;}
-    .particles span:nth-child(5){left:90%;animation-duration:9s;}
+.ready{
+  color:#00ff99;
+  margin:15px 0;
+  display:none;
+}
 
-    @keyframes float{
-      from{transform:translateY(100vh);opacity:0;}
-      20%{opacity:1;}
-      to{transform:translateY(-100vh);opacity:0;}
-    }
+.user{
+  color:#fff;
+  margin-bottom:15px;
+}
 
-    .verify-box{
-      width:450px;
-      padding:45px;
-      border-radius:28px;
-      background:rgba(7,10,25,0.65);
-      backdrop-filter:blur(20px);
-      border:1px solid rgba(255,255,255,0.08);
-      text-align:center;
-      position:relative;
-      z-index:2;
-
-      box-shadow:
-      0 0 40px rgba(0,174,255,0.2),
-      0 0 80px rgba(140,0,255,0.2);
-    }
-
-    .verify-box::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      border-radius:28px;
-      padding:2px;
-      background:linear-gradient(135deg,#00c3ff,#7b2cff,#00c3ff);
-      -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
-      -webkit-mask-composite:xor;
-      mask-composite:exclude;
-      animation:borderGlow 5s linear infinite;
-    }
-
-    @keyframes borderGlow{
-      100%{filter:hue-rotate(360deg);}
-    }
-
-    h1{
-      color:white;
-      font-size:42px;
-      margin-bottom:10px;
-      font-weight:700;
-      letter-spacing:1px;
-    }
-
-    .subtitle{
-      font-size:20px;
-      margin-bottom:35px;
-      background:linear-gradient(90deg,#00c3ff,#c14dff);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      font-weight:500;
-    }
-
-    .verify-btn{
-      width:100%;
-      padding:18px;
-      border:none;
-      border-radius:18px;
-      font-size:18px;
-      font-weight:600;
-      cursor:pointer;
-      color:white;
-      background:linear-gradient(90deg,#7b2cff,#00c3ff);
-      transition:0.3s;
-      box-shadow:
-      0 0 20px rgba(123,44,255,0.5),
-      0 0 40px rgba(0,195,255,0.3);
-    }
-
-    .verify-btn:hover{
-      transform:translateY(-3px) scale(1.03);
-      box-shadow:
-      0 0 30px rgba(123,44,255,0.7),
-      0 0 60px rgba(0,195,255,0.5);
-    }
-
-    @media(max-width:600px){
-      .verify-box{
-        width:92%;
-        padding:35px 25px;
-      }
-      h1{
-        font-size:32px;
-      }
-    }
-
-  </style>
+</style>
 </head>
 
 <body>
 
-  <div class="circle circle1"></div>
-  <div class="circle circle2"></div>
+<div class="verify-box">
 
-  <div class="particles">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+  <h1>NEXORA</h1>
 
-  <div class="verify-box">
+  <p class="subtitle">Discord Verification System</p>
 
-    <h1>NEXORA</h1>
+  <div id="user" class="user"></div>
 
-    <p class="subtitle">
-      Nexora verify
-    </p>
+  <div id="ready" class="ready">✔ Connected to Discord</div>
 
-    <button
-      class="verify-btn"
-      onclick="window.location.href='/auth/discord'">
-      Verify Identity
-    </button>
+  <button id="loginBtn" class="verify-btn" onclick="login()">
+    Verify Identity
+  </button>
 
-  </div>
+  <button id="finalBtn" class="verify-btn" style="display:none;" onclick="verifyRole()">
+    Confirm Verification
+  </button>
+
+</div>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+const userId = params.get("user");
+
+if(userId){
+  document.getElementById("ready").style.display = "block";
+  document.getElementById("loginBtn").style.display = "none";
+  document.getElementById("finalBtn").style.display = "block";
+  document.getElementById("user").innerText = "User ID: " + userId;
+}
+
+function login(){
+  window.location.href="/auth/discord";
+}
+
+async function verifyRole(){
+
+  const res = await fetch("/api/verify", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ userId })
+  });
+
+  const text = await res.text();
+  alert(text);
+
+}
+
+</script>
 
 </body>
 </html>
