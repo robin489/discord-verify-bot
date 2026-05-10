@@ -27,14 +27,12 @@
       position:relative;
     }
 
-    /* Background glow */
     body::before{
       content:"";
       position:absolute;
       width:1200px;
       height:1200px;
-      background:
-      radial-gradient(circle, rgba(0,174,255,0.15) 0%, transparent 60%);
+      background: radial-gradient(circle, rgba(0,174,255,0.15) 0%, transparent 60%);
       animation:pulse 6s infinite ease-in-out;
     }
 
@@ -49,20 +47,11 @@
     }
 
     @keyframes pulse{
-      0%{
-        transform:scale(1);
-      }
-
-      50%{
-        transform:scale(1.1);
-      }
-
-      100%{
-        transform:scale(1);
-      }
+      0%{transform:scale(1);}
+      50%{transform:scale(1.1);}
+      100%{transform:scale(1);}
     }
 
-    /* Cercles animés */
     .circle{
       position:absolute;
       border-radius:50%;
@@ -70,28 +59,14 @@
       animation:rotate 20s linear infinite;
     }
 
-    .circle1{
-      width:700px;
-      height:700px;
-    }
-
-    .circle2{
-      width:500px;
-      height:500px;
-      animation-direction:reverse;
-    }
+    .circle1{width:700px;height:700px;}
+    .circle2{width:500px;height:500px;animation-direction:reverse;}
 
     @keyframes rotate{
-      from{
-        transform:rotate(0deg);
-      }
-
-      to{
-        transform:rotate(360deg);
-      }
+      from{transform:rotate(0deg);}
+      to{transform:rotate(360deg);}
     }
 
-    /* Particules */
     .particles span{
       position:absolute;
       width:4px;
@@ -102,48 +77,18 @@
       animation:float 10s linear infinite;
     }
 
-    .particles span:nth-child(1){
-      left:10%;
-      animation-duration:7s;
-    }
-
-    .particles span:nth-child(2){
-      left:30%;
-      animation-duration:12s;
-    }
-
-    .particles span:nth-child(3){
-      left:50%;
-      animation-duration:8s;
-    }
-
-    .particles span:nth-child(4){
-      left:70%;
-      animation-duration:15s;
-    }
-
-    .particles span:nth-child(5){
-      left:90%;
-      animation-duration:9s;
-    }
+    .particles span:nth-child(1){left:10%;animation-duration:7s;}
+    .particles span:nth-child(2){left:30%;animation-duration:12s;}
+    .particles span:nth-child(3){left:50%;animation-duration:8s;}
+    .particles span:nth-child(4){left:70%;animation-duration:15s;}
+    .particles span:nth-child(5){left:90%;animation-duration:9s;}
 
     @keyframes float{
-      from{
-        transform:translateY(100vh);
-        opacity:0;
-      }
-
-      20%{
-        opacity:1;
-      }
-
-      to{
-        transform:translateY(-100vh);
-        opacity:0;
-      }
+      from{transform:translateY(100vh);opacity:0;}
+      20%{opacity:1;}
+      to{transform:translateY(-100vh);opacity:0;}
     }
 
-    /* Carte */
     .verify-box{
       width:450px;
       padding:45px;
@@ -160,7 +105,6 @@
       0 0 80px rgba(140,0,255,0.2);
     }
 
-    /* Bordure animée */
     .verify-box::before{
       content:"";
       position:absolute;
@@ -168,21 +112,14 @@
       border-radius:28px;
       padding:2px;
       background:linear-gradient(135deg,#00c3ff,#7b2cff,#00c3ff);
-
-      -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-
+      -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
       -webkit-mask-composite:xor;
       mask-composite:exclude;
-
       animation:borderGlow 5s linear infinite;
     }
 
     @keyframes borderGlow{
-      100%{
-        filter:hue-rotate(360deg);
-      }
+      100%{filter:hue-rotate(360deg);}
     }
 
     h1{
@@ -196,33 +133,23 @@
     .subtitle{
       font-size:20px;
       margin-bottom:35px;
-
       background:linear-gradient(90deg,#00c3ff,#c14dff);
-
       -webkit-background-clip:text;
       -webkit-text-fill-color:transparent;
-
       font-weight:500;
     }
 
-    /* Bouton */
     .verify-btn{
       width:100%;
       padding:18px;
       border:none;
       border-radius:18px;
-
       font-size:18px;
       font-weight:600;
-
       cursor:pointer;
-
       color:white;
-
       background:linear-gradient(90deg,#7b2cff,#00c3ff);
-
       transition:0.3s;
-
       box-shadow:
       0 0 20px rgba(123,44,255,0.5),
       0 0 40px rgba(0,195,255,0.3);
@@ -230,37 +157,16 @@
 
     .verify-btn:hover{
       transform:translateY(-3px) scale(1.03);
-
       box-shadow:
       0 0 30px rgba(123,44,255,0.7),
       0 0 60px rgba(0,195,255,0.5);
     }
 
-    .verify-btn:disabled{
-      opacity:0.8;
-      cursor:not-allowed;
-    }
-
-    .success{
-      margin-top:20px;
-      color:#00ff99;
-      opacity:0;
-      transition:0.4s;
-      font-size:15px;
-    }
-
-    .success.show{
-      opacity:1;
-    }
-
-    /* Responsive */
     @media(max-width:600px){
-
       .verify-box{
         width:92%;
         padding:35px 25px;
       }
-
       h1{
         font-size:32px;
       }
@@ -271,11 +177,9 @@
 
 <body>
 
-  <!-- Cercles -->
   <div class="circle circle1"></div>
   <div class="circle circle2"></div>
 
-  <!-- Particules -->
   <div class="particles">
     <span></span>
     <span></span>
@@ -284,7 +188,6 @@
     <span></span>
   </div>
 
-  <!-- Carte -->
   <div class="verify-box">
 
     <h1>NEXORA</h1>
@@ -293,53 +196,13 @@
       Nexora verify
     </p>
 
-    <button class="verify-btn" id="verifyBtn">
+    <button
+      class="verify-btn"
+      onclick="window.location.href='/auth/discord'">
       Verify Identity
     </button>
 
-    <div class="success" id="successMessage">
-      ✔ Verification réussie
-    </div>
-
   </div>
-
-  <script>
-
-    document.addEventListener("DOMContentLoaded", () => {
-
-      const verifyBtn = document.getElementById("verifyBtn");
-      const successMessage = document.getElementById("successMessage");
-
-      verifyBtn.addEventListener("click", () => {
-
-        /* Désactive le bouton */
-        verifyBtn.disabled = true;
-
-        /* Animation texte */
-        verifyBtn.innerHTML = "Verification...";
-
-        /* Effet loading */
-        verifyBtn.style.opacity = "0.8";
-
-        setTimeout(() => {
-
-          /* Succès */
-          verifyBtn.innerHTML = "Verified ✔";
-
-          /* Couleur verte */
-          verifyBtn.style.background =
-          "linear-gradient(90deg,#00ff99,#00c3ff)";
-
-          /* Message visible */
-          successMessage.classList.add("show");
-
-        }, 2000);
-
-      });
-
-    });
-
-  </script>
 
 </body>
 </html>
