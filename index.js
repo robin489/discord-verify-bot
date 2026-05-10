@@ -46,7 +46,7 @@ app.get("/auth/discord", (req, res) => {
 
 });
 
-/* CALLBACK (PLUS DE ROLE ICI) */
+/* CALLBACK (NO ROLE HERE) */
 app.get("/callback", async (req, res) => {
 
   const code = req.query.code;
@@ -87,7 +87,7 @@ app.get("/callback", async (req, res) => {
 
     const user = userResponse.data;
 
-    // 👉 redirection vers page Nexora (IMPORTANT)
+    // 👉 page Nexora
     res.redirect(`/verify.html?user=${user.id}`);
 
   } catch (err) {
@@ -97,7 +97,7 @@ app.get("/callback", async (req, res) => {
 
 });
 
-/* VERIFY MANUELLE */
+/* VERIFY MANUELLE + LOG SALON */
 app.post("/api/verify", async (req, res) => {
 
   try {
@@ -109,9 +109,17 @@ app.post("/api/verify", async (req, res) => {
     const guild = await client.guilds.fetch(process.env.GUILD_ID);
     const member = await guild.members.fetch(userId);
 
+    // 👉 role add
     await member.roles.add(process.env.ROLE_ID);
 
     console.log(`✔ Role donné à ${userId}`);
+
+    // 👉 LOG DANS SALON VERIFY
+    const channel = await guild.channels.fetch(process.env.VERIFY_CHANNEL_ID);
+
+    if (channel) {
+      channel.send(`✔ <@${userId}> a été vérifié avec succès`);
+    }
 
     res.send("Utilisateur vérifié ✔");
 
