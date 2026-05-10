@@ -1,26 +1,182 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Verify</title>
-</head>
-<body style="font-family: Arial; text-align:center; margin-top:100px;">
+<html lang="fr">
 
-<h1>Discord Verification</h1>
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Discord Verify</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  font-family:Arial;
+  background:#0d1117;
+}
+
+/* Background animé */
+
+body::before{
+  content:'';
+  position:absolute;
+  width:600px;
+  height:600px;
+  background:#5865F2;
+  border-radius:50%;
+  filter:blur(150px);
+  animation:move 8s infinite alternate;
+}
+
+@keyframes move{
+  from{
+    transform:translate(-200px,-100px);
+  }
+
+  to{
+    transform:translate(200px,100px);
+  }
+}
+
+/* Carte */
+
+.card{
+  position:relative;
+  z-index:1;
+  width:400px;
+  padding:40px;
+  border-radius:25px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.1);
+  text-align:center;
+  color:white;
+  animation:fade 1s ease;
+}
+
+@keyframes fade{
+  from{
+    opacity:0;
+    transform:translateY(30px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.logo{
+  font-size:60px;
+  margin-bottom:20px;
+  animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+  0%{
+    transform:translateY(0px);
+  }
+
+  50%{
+    transform:translateY(-10px);
+  }
+
+  100%{
+    transform:translateY(0px);
+  }
+}
+
+h1{
+  font-size:35px;
+  margin-bottom:10px;
+}
+
+p{
+  color:#c7c7c7;
+  margin-bottom:30px;
+}
+
+/* Bouton */
+
+button{
+  background:#5865F2;
+  border:none;
+  color:white;
+  padding:15px 45px;
+  font-size:18px;
+  border-radius:15px;
+  cursor:pointer;
+  transition:0.3s;
+  box-shadow:0 0 20px #5865F2;
+}
+
+button:hover{
+  transform:scale(1.08);
+  background:#6d78ff;
+  box-shadow:0 0 35px #5865F2;
+}
+
+#message{
+  margin-top:25px;
+  font-size:18px;
+  color:#57F287;
+  animation:fade 0.5s ease;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="logo">
+🛡️
+</div>
+
+<h1>Discord Verify</h1>
+
+<p>
+Clique sur le bouton pour accéder au serveur.
+</p>
 
 <button id="verifyBtn">
 Verify
 </button>
 
+<div id="message"></div>
+
+</div>
+
 <script>
-document.getElementById("verifyBtn")
+
+document
+.getElementById("verifyBtn")
 .onclick = async () => {
 
-  const response = await fetch('/finalverify');
+  const response =
+  await fetch('/finalverify');
 
-  const text = await response.text();
+  const text =
+  await response.text();
 
-  alert(text);
+  document
+  .getElementById("message")
+  .innerText = text;
 };
+
 </script>
 
 </body>
