@@ -2,136 +2,118 @@
 <html lang="fr">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Discord Verify</title>
+<title>Secure Access</title>
 
 <style>
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
 body{
+  margin:0;
   height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  overflow:hidden;
   font-family:Arial;
-  background:#0d1117;
+  background:#0b0f19;
+  overflow:hidden;
+  color:white;
 }
 
-/* Background animé */
-
-body::before{
-  content:'';
+/* gradient animé */
+.bg{
   position:absolute;
   width:600px;
   height:600px;
-  background:#5865F2;
+  background:linear-gradient(45deg,#5865F2,#00d4ff,#7c3aed);
+  filter:blur(180px);
   border-radius:50%;
-  filter:blur(150px);
-  animation:move 8s infinite alternate;
+  animation:move 10s infinite alternate;
 }
 
 @keyframes move{
-  from{
-    transform:translate(-200px,-100px);
-  }
-
-  to{
-    transform:translate(200px,100px);
-  }
+  from{transform:translate(-250px,-200px);}
+  to{transform:translate(250px,200px);}
 }
 
-/* Carte */
-
+/* card */
 .card{
   position:relative;
-  z-index:1;
-  width:400px;
-  padding:40px;
-  border-radius:25px;
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,0.1);
+  z-index:2;
+  width:420px;
+  padding:35px;
+  border-radius:18px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  backdrop-filter:blur(18px);
   text-align:center;
-  color:white;
+  box-shadow:0 0 40px rgba(0,0,0,0.5);
   animation:fade 1s ease;
 }
 
 @keyframes fade{
-  from{
-    opacity:0;
-    transform:translateY(30px);
-  }
-
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-.logo{
-  font-size:60px;
-  margin-bottom:20px;
-  animation:float 3s ease-in-out infinite;
-}
-
-@keyframes float{
-  0%{
-    transform:translateY(0px);
-  }
-
-  50%{
-    transform:translateY(-10px);
-  }
-
-  100%{
-    transform:translateY(0px);
-  }
+  from{opacity:0; transform:translateY(30px);}
+  to{opacity:1; transform:translateY(0);}
 }
 
 h1{
-  font-size:35px;
-  margin-bottom:10px;
+  font-size:26px;
+  margin-bottom:8px;
 }
 
 p{
-  color:#c7c7c7;
-  margin-bottom:30px;
+  color:#b5b5b5;
+  margin-bottom:25px;
 }
 
-/* Bouton */
-
+/* bouton premium */
 button{
-  background:#5865F2;
+  background:linear-gradient(90deg,#5865F2,#7c3aed);
   border:none;
+  padding:14px 40px;
   color:white;
-  padding:15px 45px;
-  font-size:18px;
-  border-radius:15px;
+  font-size:16px;
+  border-radius:12px;
   cursor:pointer;
   transition:0.3s;
-  box-shadow:0 0 20px #5865F2;
+  box-shadow:0 0 25px rgba(88,101,242,0.6);
 }
 
 button:hover{
   transform:scale(1.08);
-  background:#6d78ff;
-  box-shadow:0 0 35px #5865F2;
+  box-shadow:0 0 45px rgba(124,58,237,0.8);
 }
 
-#message{
-  margin-top:25px;
-  font-size:18px;
+/* status */
+#msg{
+  margin-top:20px;
+  font-size:14px;
   color:#57F287;
-  animation:fade 0.5s ease;
+}
+
+/* loader */
+.loader{
+  margin-top:20px;
+  display:none;
+}
+
+.dot{
+  width:8px;
+  height:8px;
+  background:#5865F2;
+  border-radius:50%;
+  display:inline-block;
+  margin:0 3px;
+  animation:bounce 1s infinite;
+}
+
+.dot:nth-child(2){animation-delay:0.2s;}
+.dot:nth-child(3){animation-delay:0.4s;}
+
+@keyframes bounce{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
 }
 
 </style>
@@ -140,41 +122,38 @@ button:hover{
 
 <body>
 
+<div class="bg"></div>
+
 <div class="card">
 
-<div class="logo">
-🛡️
+<h1>Secure Verification</h1>
+
+<p>Accès protégé — vérification requise</p>
+
+<button id="btn">Verify Identity</button>
+
+<div class="loader" id="loader">
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
 </div>
 
-<h1>Discord Verify</h1>
-
-<p>
-Clique sur le bouton pour accéder au serveur.
-</p>
-
-<button id="verifyBtn">
-Verify
-</button>
-
-<div id="message"></div>
+<div id="msg"></div>
 
 </div>
 
 <script>
 
-document
-.getElementById("verifyBtn")
-.onclick = async () => {
+document.getElementById("btn").onclick = async () => {
 
-  const response =
-  await fetch('/finalverify');
+  document.getElementById("loader").style.display = "block";
 
-  const text =
-  await response.text();
+  const res = await fetch("/finalverify");
+  const text = await res.text();
 
-  document
-  .getElementById("message")
-  .innerText = text;
+  document.getElementById("msg").innerText = text;
+
+  document.getElementById("loader").style.display = "none";
 };
 
 </script>
