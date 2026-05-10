@@ -46,7 +46,7 @@ app.get("/auth/discord", (req, res) => {
 
 });
 
-/* CALLBACK (NO ROLE HERE) */
+/* CALLBACK */
 app.get("/callback", async (req, res) => {
 
   const code = req.query.code;
@@ -87,7 +87,6 @@ app.get("/callback", async (req, res) => {
 
     const user = userResponse.data;
 
-    // 👉 page Nexora
     res.redirect(`/verify.html?user=${user.id}`);
 
   } catch (err) {
@@ -97,7 +96,7 @@ app.get("/callback", async (req, res) => {
 
 });
 
-/* VERIFY MANUELLE + LOG SALON (FIXED) */
+/* VERIFY MANUELLE + LOG SALON (FIX FINAL) */
 app.post("/api/verify", async (req, res) => {
 
   try {
@@ -109,16 +108,15 @@ app.post("/api/verify", async (req, res) => {
     const guild = await client.guilds.fetch(process.env.GUILD_ID);
     const member = await guild.members.fetch(userId);
 
-    // 👉 add role
     await member.roles.add(process.env.ROLE_ID);
 
     console.log(`✔ Role donné à ${userId}`);
 
-    // 👉 LOG SALON VERIFY (FIX IMPORTANT)
-    const channel = guild.channels.cache.get(process.env.VERIFY_CHANNEL_ID);
+    /* 🔥 FIX IMPORTANT: FETCH AU LIEU DE CACHE */
+    const channel = await guild.channels.fetch(process.env.VERIFY_CHANNEL_ID).catch(() => null);
 
     if (!channel) {
-      console.log("❌ Salon VERIFY introuvable");
+      console.log("❌ Salon VERIFY introuvable ou inaccessible");
     } else {
       await channel.send(`✔ <@${userId}> a été vérifié avec succès`);
       console.log("✔ Message envoyé salon verify");
