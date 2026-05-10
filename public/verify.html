@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Verify</title>
+</head>
+<body style="font-family: Arial; text-align:center; margin-top:100px;">
+
+<h1>Discord Verification</h1>
+
+<button id="verifyBtn">
+Verify
+</button>
+
+<script>
+document.getElementById("verifyBtn")
+.onclick = async () => {
+
+  const response = await fetch('/finalverify');
+
+  const text = await response.text();
+
+  alert(text);
+};
+</script>
+
+</body>
+</html>
