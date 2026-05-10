@@ -2,7 +2,6 @@ require("dotenv").config();
 
 const express = require("express");
 const axios = require("axios");
-
 const { Client, GatewayIntentBits } = require("discord.js");
 
 const app = express();
@@ -15,6 +14,11 @@ if (!process.env.TOKEN) {
 
 if (!process.env.CLIENT_ID || !process.env.CLIENT_SECRET) {
   console.error("❌ CLIENT_ID ou CLIENT_SECRET manquant");
+  process.exit(1);
+}
+
+if (!process.env.REDIRECT_URI) {
+  console.error("❌ REDIRECT_URI manquant");
   process.exit(1);
 }
 
@@ -47,11 +51,12 @@ app.get("/callback", async (req, res) => {
   const code = req.query.code;
 
   if (!code) {
-    return res.send("❌ Code manquant");
+    return res.send("❌ Code manquant (OAuth Discord)");
   }
 
   try {
 
+    /* TOKEN */
     const tokenResponse = await axios.post(
       "https://discord.com/api/oauth2/token",
       new URLSearchParams({
@@ -71,6 +76,7 @@ app.get("/callback", async (req, res) => {
 
     const accessToken = tokenResponse.data.access_token;
 
+    /* USER INFO */
     const userResponse = await axios.get(
       "https://discord.com/api/users/@me",
       {
@@ -82,10 +88,12 @@ app.get("/callback", async (req, res) => {
 
     const user = userResponse.data;
 
+    /* GUILD */
     const guild = await client.guilds.fetch(process.env.GUILD_ID);
 
     const member = await guild.members.fetch(user.id);
 
+    /* ROLE ADD */
     await member.roles.add(process.env.ROLE_ID);
 
     console.log(`✅ Role ajouté à ${user.username}`);
@@ -97,8 +105,11 @@ app.get("/callback", async (req, res) => {
     `);
 
   } catch (err) {
-    console.error("❌ Erreur callback:", err.message);
-    res.send("Erreur vérification");
+
+    console.error("❌ CALLBACK ERROR:");
+    console.error(err.response?.data || err.message);
+
+    res.send("❌ Erreur vérification (regarde logs Render)");
   }
 
 });
