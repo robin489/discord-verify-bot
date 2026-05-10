@@ -7,7 +7,7 @@ const { Client, GatewayIntentBits } = require("discord.js");
 const app = express();
 
 /* =========================
-   SAFE ENV CHECK (NO CRASH)
+   SAFE ENV CHECK
 ========================= */
 
 const TOKEN = process.env.TOKEN;
@@ -47,9 +47,7 @@ app.use(express.static("public"));
 app.use(express.json());
 
 /* =========================
-   JOIN SYSTEM (IMPORTANT)
-   - role Unverified
-   - message #verify
+   JOIN SYSTEM + STORE MESSAGE
 ========================= */
 
 client.on("guildMemberAdd", async (member) => {
@@ -58,19 +56,24 @@ client.on("guildMemberAdd", async (member) => {
 
     const guild = member.guild;
 
-    // 1. give Unverified role
     const unverifiedRole = guild.roles.cache.find(r => r.name === "Unverified");
     if (unverifiedRole) await member.roles.add(unverifiedRole);
 
-    // 2. send message in verify channel
     const channel = guild.channels.cache.get(process.env.VERIFY_CHANNEL_ID);
 
     if (channel) {
-      channel.send(
+
+      const msg = await channel.send(
         `👋 Bienvenue <@${member.id}> !\n\n` +
         `🔐 Pour accéder au serveur, vérifie-toi ici :\n` +
         `👉 https://discord-verify-bot-ruwm.onrender.com/auth/discord`
       );
+
+      // 👉 STOCKAGE DU MESSAGE
+      global.verifyMessages = global.verifyMessages || {};
+      global.verifyMessages[member.id] = msg.id;
+
+      console.log("✔ Message verify envoyé:", msg.id);
     }
 
   } catch (err) {
@@ -132,7 +135,6 @@ app.get("/callback", async (req, res) => {
 
     const user = userResponse.data;
 
-    // 👉 send to verify page
     res.redirect(`/verify.html?user=${user.id}`);
 
   } catch (err) {
@@ -143,7 +145,7 @@ app.get("/callback", async (req, res) => {
 });
 
 /* =========================
-   VERIFY SYSTEM (FINAL)
+   VERIFY SYSTEM + DELETE MESSAGE
 ========================= */
 
 app.post("/api/verify", async (req, res) => {
@@ -156,18 +158,30 @@ app.post("/api/verify", async (req, res) => {
     const guild = await client.guilds.fetch(process.env.GUILD_ID);
     const member = await guild.members.fetch(userId);
 
-    // 1. remove Unverified role
+    // 👉 REMOVE UNVERIFIED
     const unverifiedRole = guild.roles.cache.find(r => r.name === "Unverified");
     if (unverifiedRole) await member.roles.remove(unverifiedRole);
 
-    // 2. add Verified role
+    // 👉 ADD VERIFIED
     await member.roles.add(process.env.ROLE_ID);
 
     console.log(`✔ Verified: ${userId}`);
 
-    // 3. log channel
+    // 👉 DELETE MESSAGE
     const channel = guild.channels.cache.get(process.env.VERIFY_CHANNEL_ID);
+    const messageId = global.verifyMessages?.[userId];
 
+    if (channel && messageId) {
+      try {
+        const msg = await channel.messages.fetch(messageId);
+        await msg.delete();
+        console.log("🗑 Message verify supprimé");
+      } catch (e) {
+        console.log("⚠ Delete message error:", e.message);
+      }
+    }
+
+    // 👉 CONFIRM MESSAGE
     if (channel) {
       channel.send(`✔ <@${userId}> a été vérifié avec succès`);
     }
