@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexora Verify</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0f17;
+  --card:#20222c;
+  --card2:#171924;
+  --line:#343747;
+  --text:#ffffff;
+  --muted:#b8bdca;
+  --blue:#5865f2;
+  --cyan:#27d8ff;
+  --purple:#8f4dff;
+  --green:#22c55e;
+  --red:#ef4444;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  min-height:100vh;
+  font-family:"Inter",sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% 10%,rgba(88,101,242,.34),transparent 26%),
+    radial-gradient(circle at 85% 35%,rgba(39,216,255,.18),transparent 28%),
+    radial-gradient(circle at 40% 100%,rgba(143,77,255,.22),transparent 34%),
+    var(--bg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:26px;
+  overflow:hidden;
+}
+.grid{
+  position:fixed;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:46px 46px;
+  mask-image:linear-gradient(to bottom,rgba(0,0,0,.75),transparent);
+}
+.panel{
+  width:min(610px,100%);
+  position:relative;
+  z-index:2;
+  background:linear-gradient(180deg,rgba(39,41,54,.96),rgba(24,26,37,.96));
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:18px;
+  box-shadow:0 28px 90px rgba(0,0,0,.46),0 0 60px rgba(88,101,242,.18);
+  overflow:hidden;
+}
+.banner{
+  height:182px;
+  padding:22px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-bottom:1px solid var(--line);
+  background:
+    linear-gradient(135deg,rgba(88,101,242,.25),rgba(39,216,255,.12)),
+    radial-gradient(circle at 50% 15%,rgba(255,255,255,.16),transparent 22%),
+    #090b18;
+}
+.banner::before{
+  content:"";
+  position:absolute;
+  inset:16px;
+  border-radius:14px;
+  border:1px solid rgba(39,216,255,.35);
+  box-shadow:inset 0 0 28px rgba(39,216,255,.15),0 0 22px rgba(88,101,242,.22);
+}
+.logo{
+  width:70px;height:70px;border-radius:20px;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  display:grid;place-items:center;
+  font-size:36px;
+  box-shadow:0 0 34px rgba(88,101,242,.55);
+  margin-right:18px;
+}
+.brand{position:relative;display:flex;align-items:center;letter-spacing:.04em}
+.brand h1{font-size:42px;font-weight:800;line-height:1}
+.brand span{display:block;color:var(--cyan);font-size:15px;font-weight:700;margin-top:7px;letter-spacing:.35em;text-transform:uppercase}
+.content{padding:22px 16px 16px}
+.step{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:18px;
+  align-items:center;
+  padding:16px 0;
+  border-bottom:1px solid var(--line);
+}
+.step:last-child{border-bottom:0}
+.step h2{font-size:15px;font-weight:800;margin-bottom:5px}
+.step p{font-size:14px;color:var(--muted);line-height:1.45}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 14px;border-radius:12px;
+  background:rgba(88,101,242,.16);
+  border:1px solid rgba(88,101,242,.35);
+  color:#dfe2ff;font-weight:700;font-size:13px;
+  margin-bottom:12px;
+}
+.btn{
+  min-width:168px;
+  border:0;
+  border-radius:10px;
+  padding:13px 16px;
+  color:white;
+  font-size:14px;
+  font-weight:800;
+  cursor:pointer;
+  background:linear-gradient(135deg,var(--blue),#6f6cff);
+  box-shadow:0 10px 24px rgba(88,101,242,.32);
+  transition:.18s ease;
+}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.btn.secondary{background:linear-gradient(135deg,#293040,#35394d);box-shadow:none}
+.status{
+  margin:16px;
+  padding:14px 16px;
+  border-radius:14px;
+  background:rgba(34,197,94,.12);
+  border:1px solid rgba(34,197,94,.3);
+  color:#dcffe8;
+  display:none;
+  font-size:14px;
+  line-height:1.45;
+}
+.status.error{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.35);color:#ffe2e2}
+.footer{padding:0 16px 18px;color:#858b9e;font-size:12px;text-align:center}
+@media(max-width:620px){
+  .banner{height:160px}.brand h1{font-size:31px}.logo{width:58px;height:58px;font-size:30px}
+  .step{grid-template-columns:1fr}.btn{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="grid"></div>
+<main class="panel">
+  <section class="banner">
+    <div class="brand">
+      <div class="logo">🛡️</div>
+      <div>
+        <h1>NEXORA</h1>
+        <span>VERIFY</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="content">
+    <div class="badge">🔐 Système de vérification sécurisé</div>
+
+    <div class="step">
+      <div>
+        <h2>1. Connexion Discord</h2>
+        <p>Connecte ton compte Discord pour confirmer ton identité.</p>
+      </div>
+      <button id="loginBtn" class="btn" onclick="login()">Se connecter</button>
+    </div>
+
+    <div class="step">
+      <div>
+        <h2>2. Attribution du rôle</h2>
+        <p>Une fois validé, le rôle vérifié est ajouté automatiquement et le message dans le salon se supprime.</p>
+      </div>
+      <button id="finalBtn" class="btn secondary" style="display:none" onclick="verifyRole()">Valider</button>
+    </div>
+  </section>
+
+  <div id="status" class="status"></div>
+  <div class="footer">Nexora Verify • Ne partage jamais tes tokens ou mots de passe.</div>
+</main>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const userId = params.get("user");
+const loginBtn = document.getElementById("loginBtn");
+const finalBtn = document.getElementById("finalBtn");
+const statusBox = document.getElementById("status");
+
+function setStatus(message, type = "success") {
+  statusBox.textContent = message;
+  statusBox.className = type === "error" ? "status error" : "status";
+  statusBox.style.display = "block";
+}
+
+if (userId && userId !== "null") {
+  loginBtn.textContent = "Connecté";
+  loginBtn.disabled = true;
+  finalBtn.style.display = "inline-block";
+  setStatus("Compte Discord connecté. Tu peux terminer la vérification.");
+}
+
+function login(){
+  window.location.href = "/auth/discord";
+}
+
+async function verifyRole(){
+  try {
+    if (!userId) return setStatus("Utilisateur introuvable. Reconnecte-toi avec Discord.", "error");
+
+    finalBtn.disabled = true;
+    finalBtn.textContent = "Validation...";
+
+    const res = await fetch("/api/verify", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ userId })
+    });
+
+    const data = await res.json().catch(() => ({ ok:false, message:"Réponse serveur invalide." }));
+
+    if (!res.ok || !data.ok) {
+      finalBtn.disabled = false;
+      finalBtn.textContent = "Réessayer";
+      return setStatus(data.message || "Erreur pendant la vérification.", "error");
+    }
+
+    finalBtn.textContent = "Vérifié ✓";
+    setStatus(data.message || "Vérification réussie. Tu peux retourner sur Discord.");
+  } catch (err) {
+    finalBtn.disabled = false;
+    finalBtn.textContent = "Réessayer";
+    setStatus("Erreur de connexion au serveur.", "error");
+    console.log(err);
+  }
+}
+</script>
+</body>
+</html>
